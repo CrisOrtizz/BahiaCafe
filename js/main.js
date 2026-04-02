@@ -86,7 +86,7 @@
 
     list.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", function () {
-        if (window.matchMedia("(max-width: 899px)").matches) {
+        if (window.matchMedia("(max-width: 1023px)").matches) {
           close();
         }
       });
@@ -95,7 +95,7 @@
     window.addEventListener(
       "resize",
       function () {
-        if (window.matchMedia("(min-width: 900px)").matches) {
+        if (window.matchMedia("(min-width: 1024px)").matches) {
           close();
         }
       },

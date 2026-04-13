@@ -27,20 +27,6 @@
     });
   }
 
-  function initQrImage() {
-    var img = document.getElementById("brew-qr");
-    if (!img) return;
-    var url = buildWhatsAppUrl(
-      encodeURIComponent(
-        "Hola Bahía Café, quiero la guía de preparación de café Mozzura."
-      )
-    );
-    img.src =
-      "https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=8&data=" +
-      encodeURIComponent(url);
-    img.alt = "Código QR para contactar por WhatsApp";
-  }
-
   function initHeader() {
     var header = document.getElementById("header");
     if (!header) return;
@@ -142,6 +128,82 @@
     });
   }
 
+  function shouldReduceVideoMotion() {
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var saveData = conn && conn.saveData;
+    return reduceMotion || !!saveData;
+  }
+
+  function loadVideo(video) {
+    if (!video || video.dataset.loaded === "true") return;
+    video.setAttribute("preload", "metadata");
+    var sources = video.querySelectorAll("source[data-src]");
+    if (!sources.length) return;
+    sources.forEach(function (source) {
+      source.setAttribute("src", source.getAttribute("data-src"));
+      source.removeAttribute("data-src");
+    });
+    video.load();
+    video.dataset.loaded = "true";
+  }
+
+  function initVideoPerf() {
+    var videos = document.querySelectorAll("video[data-bg-video]");
+    if (!videos.length) return;
+
+    if (shouldReduceVideoMotion()) {
+      videos.forEach(function (video) {
+        video.removeAttribute("autoplay");
+        video.pause();
+      });
+    }
+
+    var lazyVideos = document.querySelectorAll("video[data-lazy-video]");
+    if (!lazyVideos.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      lazyVideos.forEach(loadVideo);
+      return;
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          loadVideo(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { root: null, rootMargin: "200px 0px", threshold: 0.05 }
+    );
+
+    lazyVideos.forEach(function (video) {
+      observer.observe(video);
+    });
+  }
+
+  function initHeaderVisibilityOnBrew() {
+    var header = document.getElementById("header");
+    var brew = document.getElementById("brew");
+    if (!header || !brew || !("IntersectionObserver" in window)) return;
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            header.classList.add("is-hidden");
+          } else {
+            header.classList.remove("is-hidden");
+          }
+        });
+      },
+      { root: null, threshold: 0.35 }
+    );
+
+    observer.observe(brew);
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);
   } else {
@@ -150,9 +212,10 @@
 
   function boot() {
     initWhatsAppLinks();
-    initQrImage();
     initHeader();
+    initHeaderVisibilityOnBrew();
     initNav();
+    initVideoPerf();
     initReveal();
     initHeroReveal();
   }

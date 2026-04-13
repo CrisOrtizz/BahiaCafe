@@ -58,31 +58,27 @@
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero__media" aria-hidden="true">
         <div class="hero__bg">
-          <img
-            class="hero__bg-img"
-            src="assets/images/hero-cartagena-golden-hour.png"
-            width="2048"
-            height="1365"
-            alt=""
-            fetchpriority="high"
-            decoding="async"
+          <video
+            class="hero__bg-video"
+            data-bg-video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="assets/images/hero-cartagena-golden-hour.png"
           >
+            <source src="https://res.cloudinary.com/dur2lwfua/video/upload/v1775924868/14019845_3840_2160_60fps_aysdiv.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="hero__veil"></div>
         <div class="hero__grain"></div>
       </div>
       <div class="hero__content">
-        <p class="hero__eyebrow reveal">Cartagena · Colombia</p>
         <h1 class="hero__title" id="hero-title">
           <span class="hero__line hero__line--1 reveal reveal--delay-1">Bahía Café</span>
-          <span class="hero__line hero__line--2 reveal reveal--delay-2">Cada taza cuenta una historia</span>
+          <span class="hero__line hero__line--2 reveal reveal--delay-2">Preparación en prensa francesa</span>
         </h1>
-        <p class="hero__sub reveal reveal--delay-3">Café colombiano 100% seleccionado</p>
-        <div class="hero__actions reveal reveal--delay-4">
-          <a class="btn btn--hero-products" href="#products">
-            <span>Explorar café</span>
-          </a>
-        </div>
       </div>
       <div class="hero__scroll" aria-hidden="true">
         <span>Descubre</span>
@@ -276,47 +272,18 @@
       </div>
     </section>
 
-    <!-- QR / Brew guide -->
+    <!-- Brew guide -->
     <section class="section section--brew" id="brew">
-      <div class="container brew__layout">
+      <div class="container brew__intro-wrap">
         <div class="brew__intro reveal">
           <h2 class="section__title">Aprende a preparar tu café</h2>
-          <p class="section__lead">Guía rápida de métodos. Escanea y guarda la guía en tu móvil.</p>
-          <div class="brew__qr" aria-label="Código QR a WhatsApp Bahía Café">
-            <img src="" alt="" width="160" height="160" class="brew__qr-img" id="brew-qr" loading="lazy">
-          </div>
-          <p class="brew__qr-caption">Escanea para pedir o pedir la guía en PDF por WhatsApp.</p>
         </div>
-        <ul class="brew__methods">
-          <li class="brew__method reveal">
-            <span class="brew__num">01</span>
-            <div>
-              <h3>Prensa francesa</h3>
-              <p>Cuerpo pleno, infusiones sencillas y aroma intenso.</p>
-            </div>
-          </li>
-          <li class="brew__method reveal">
-            <span class="brew__num">02</span>
-            <div>
-              <h3>Moka</h3>
-              <p>Textura cercana al espresso, ritual italiano en la estufa.</p>
-            </div>
-          </li>
-          <li class="brew__method reveal">
-            <span class="brew__num">03</span>
-            <div>
-              <h3>Espresso</h3>
-              <p>Para quien busca concentración y crema con buen molino.</p>
-            </div>
-          </li>
-          <li class="brew__method reveal">
-            <span class="brew__num">04</span>
-            <div>
-              <h3>Método simple</h3>
-              <p>V60 o goteo: claridad, notas frutales y limpieza en taza.</p>
-            </div>
-          </li>
-        </ul>
+      </div>
+      <div class="brew__video-stage reveal">
+        <video class="brew__video" data-lazy-video data-bg-video autoplay muted loop playsinline preload="none" poster="assets/images/libano-tolima-generada.png">
+          <source data-src="https://res.cloudinary.com/dur2lwfua/video/upload/v1775837897/0409_icr2df.mp4" type="video/mp4">
+        </video>
+        <div class="brew__video-overlay" aria-hidden="true"></div>
       </div>
     </section>
 
